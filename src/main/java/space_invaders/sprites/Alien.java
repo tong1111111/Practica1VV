@@ -44,28 +44,22 @@ public class Alien extends Sprite {
      * y su posición es válida dentro del tablero de juego.</dd></dl>
      */
      private void initAlien(int x, int y) {
-
-        if (x> Commons.BOARD_WIDTH){
-            this.x = Commons.BOARD_WIDTH;
-        } if (x<0){
-            this.x = 0;
-        } if (y> Commons.BOARD_HEIGHT){
-            this.y = Commons.BOARD_HEIGHT;
-        } if (y<0){
-            this.y=0;
-        }
-        else
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        bomb = new Bomb(x, y);
-
-        var alienImg = "src/main/resources/images/alien.png";
-        var ii = new ImageIcon(alienImg);
-
-        setImage(ii.getImage());
+         this.x = x;
+         this.y = y;
+         if (x> Commons.BOARD_WIDTH){
+             this.x = Commons.BOARD_WIDTH;
+         } else if (x<0){
+             this.x = 0;
+         }
+         if (y> Commons.BOARD_HEIGHT){
+             this.y = Commons.BOARD_HEIGHT;
+         } else if (y<0){
+             this.y=0;
+         }
+         bomb = new Bomb(x, y);
+         var alienImg = "src/main/resources/images/alien.png";
+         var ii = new ImageIcon(alienImg);
+         setImage(ii.getImage());
     }
 
     /**
@@ -81,8 +75,9 @@ public class Alien extends Sprite {
      * según la dirección especificada.</dd></dl>
      */
     public void act(int direction) {
-
-        this.x -= direction;
+        if(direction == -1 || direction == 1){
+            this.x += direction;
+        }
     }
 
     /**
