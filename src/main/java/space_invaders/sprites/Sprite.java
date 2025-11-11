@@ -80,4 +80,8 @@ public abstract class Sprite {
 
         return this.dying;
     }
+
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
 }
