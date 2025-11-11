@@ -52,8 +52,18 @@ public class Shot extends Sprite {
         setImage(ii.getImage());
 
         setX(x + H_SPACE);
-
         setY(y - V_SPACE);
+
+        if (x > 352){
+            setX(358);
+        }else if(x < -6){
+            setX(0);
+        }
+        if (y > 351){
+            setY(350);
+        }else if (y < 1) {
+            setY(0);
+        }
     }
 }
 
