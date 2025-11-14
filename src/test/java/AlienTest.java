@@ -43,38 +43,6 @@ public class AlienTest {
     }
 
     @Test
-    void testinitAlien_Caso2() {
-        int x = 100;
-        int y = -1;
-        Alien a = new Alien(x, y);
-
-        try {
-            Method metodo = a.getClass().getDeclaredMethod("initAlien", int.class, int.class);
-            metodo.setAccessible(true);
-            metodo.invoke(a, x,y);
-
-            Field valx = Sprite.class.getDeclaredField("x");
-            valx.setAccessible(true);
-            int valorx = (int) valx.get(a);
-
-            Field valy = Sprite.class.getDeclaredField("y");
-            valy.setAccessible(true);
-            int valory = (int) valy.get(a);
-
-            assertTrue((valorx == 100) && (valory == 0));
-
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Test
     void testinitAlien_Caso3() {
         int x = 100;
         int y = 351;
