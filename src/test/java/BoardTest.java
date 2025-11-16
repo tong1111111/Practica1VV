@@ -5,7 +5,9 @@ import space_invaders.sprites.Alien;
 import space_invaders.sprites.Shot;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +21,7 @@ public class BoardTest {
 
     @Test
     public void test_GameInit_Case1(){
-        assertTrue(board.getAliens().size() == (Commons.ALIEN_ROWS*Commons.ALIEN_COLUMNS));
+        assertEquals((Commons.ALIEN_ROWS * Commons.ALIEN_COLUMNS), board.getAliens().size());
     }
 
     @Test
@@ -65,9 +67,8 @@ public class BoardTest {
     @Test
     public void test_Update_Shots_Caso3() {
         try{
-            Iterator<Alien> itAlien = board.getAliens().iterator();
-            while (itAlien.hasNext()) {
-                itAlien.next().die();
+            for (Alien alien : board.getAliens()) {
+                alien.die();
             }
             Shot shot = board.getShot();
             shot.setY(100);
@@ -127,9 +128,8 @@ public class BoardTest {
     @Test
     public void test_Update_Shots_Caso6() {
         try{
-            Iterator<Alien> itAlien = board.getAliens().iterator();
-            while (itAlien.hasNext()) {
-                itAlien.next().die();
+            for (Alien alien : board.getAliens()) {
+                alien.die();
             }
             Shot shot = board.getShot();
             shot.setX(100);
@@ -137,9 +137,112 @@ public class BoardTest {
             Method method = Board.class.getDeclaredMethod("update_shots");
             method.setAccessible(true);
             method.invoke(board);
-            assertTrue(!shot.isVisible());
+            assertFalse(shot.isVisible());
         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void test_Update_Aliens_Caso3() {
+        try{
+            for (Alien alien : board.getAliens()) {
+                alien.die();
+            }
+            Method method = Board.class.getDeclaredMethod("update_aliens");
+            method.setAccessible(true);
+            method.invoke(board);
+            assertTrue(!board.getAliens().getFirst().isVisible());
+        }catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void test_Update_Aliens_Caso4 () {
+        try{
+            Iterator<Alien> itAlien = board.getAliens().iterator();
+            Alien alien = itAlien.next();
+            while (itAlien.hasNext()) {
+                itAlien.next().die();
+            }
+            alien.setX(Commons.BOARD_WIDTH/2);
+            alien.setY(Commons.BOARD_HEIGHT/2);
+            int aliensPosX = alien.getX(), aliensPosY = alien.getY();
+            board.setDirection(1);
+            Method method = Board.class.getDeclaredMethod("update_aliens");
+            method.setAccessible(true);
+            method.invoke(board);
+            assertTrue((aliensPosY == alien.getY()) && (aliensPosX != alien.getX()));
+        }catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void test_Update_Aliens_Caso5 () {
+        try {
+            Iterator<Alien> itAlien = board.getAliens().iterator();
+            Alien alien = itAlien.next();
+            while (itAlien.hasNext()) {
+                itAlien.next().die();
+            }
+            alien.setX(Commons.BOARD_WIDTH/2);
+            alien.setY(Commons.GROUND + Commons.ALIEN_HEIGHT + 1);
+            String message = "Invasion!";
+            int aliensPosX = alien.getX(), aliensPosY = alien.getY();
+            board.setDirection(1);
+            Method method = Board.class.getDeclaredMethod("update_aliens");
+            method.setAccessible(true);
+            method.invoke(board);
+            assertTrue((aliensPosY == alien.getY()) && (aliensPosX != alien.getX()) &&  board.getMessage().equals(message) && board.isInGame());
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void test_Update_Aliens_Caso7 () {
+        try {
+            Iterator<Alien> itAlien = board.getAliens().iterator();
+            Alien alien = itAlien.next();
+            while (itAlien.hasNext()) {
+                itAlien.next().die();
+            }
+            alien.setX(Commons.BOARD_WIDTH - Commons.BORDER_RIGHT);
+            alien.setY(Commons.BOARD_HEIGHT / 2);
+            int aliensPosX = alien.getX(), aliensPosY = alien.getY();
+            board.setDirection(-1);
+            Method method = Board.class.getDeclaredMethod("update_aliens");
+            method.setAccessible(true);
+            method.invoke(board);
+            assertTrue((aliensPosY + Commons.GO_DOWN == alien.getY()) && (aliensPosX != alien.getX()) && board.getDirection() == -1);
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void test_Update_Aliens_Caso9 () {
+        try {
+            Iterator<Alien> itAlien = board.getAliens().iterator();
+            Alien alien = itAlien.next();
+            while (itAlien.hasNext()) {
+                itAlien.next().die();
+            }
+            alien.setX(Commons.BORDER_LEFT);
+            alien.setY(Commons.BOARD_HEIGHT / 2);
+            int aliensPosX = alien.getX(), aliensPosY = alien.getY();
+            board.setDirection(-1);
+            Method method = Board.class.getDeclaredMethod("update_aliens");
+            method.setAccessible(true);
+            method.invoke(board);
+            assertTrue((aliensPosY + Commons.GO_DOWN == alien.getY()) && (aliensPosX != alien.getX()) && board.getDirection() == 1);
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 }
