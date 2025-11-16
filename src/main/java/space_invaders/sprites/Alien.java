@@ -44,23 +44,29 @@ public class Alien extends Sprite {
      * y su posición es válida dentro del tablero de juego.</dd></dl>
      */
      private void initAlien(int x, int y) {
-         this.x = x;
-         this.y = y;
          if (x> Commons.BOARD_WIDTH){
              this.x = Commons.BOARD_WIDTH;
-         } else if (x<0){
+         } if (x<0){
              this.x = 0;
-         }
-         if (y> Commons.BOARD_HEIGHT){
+         } if (y> Commons.BOARD_HEIGHT){
              this.y = Commons.BOARD_HEIGHT;
-         } else if (y<0){
+         } if (y<0){
              this.y=0;
          }
+         else
+         {
+             this.x = x;
+             this.y = y;
+         }
+
          bomb = new Bomb(x, y);
+
          var alienImg = "src/main/resources/images/alien.png";
          var ii = new ImageIcon(alienImg);
+
          setImage(ii.getImage());
-    }
+
+     }
 
     /**
      * {@summary Ejecuta una acción de movimiento del alien en la dirección especificada.}
@@ -75,9 +81,7 @@ public class Alien extends Sprite {
      * según la dirección especificada.</dd></dl>
      */
     public void act(int direction) {
-        if(direction == -1 || direction == 1){
-            this.x += direction;
-        }
+        this.x -= direction;
     }
 
     /**
@@ -122,25 +126,21 @@ public class Alien extends Sprite {
          * Si se introduce algún valor negativo, será reemplazado por 0.
          * */
         private void initBomb(int x, int y) {
-
             setDestroyed(true);
 
-            this.x = x;
-            this.y = y;
-            if (x> Commons.BOARD_WIDTH){
+            if (x<= Commons.BOARD_WIDTH && y<= Commons.BOARD_HEIGHT) {
+                this.x += x;
+                this.y += y;
+            } else
+            {
                 this.x = Commons.BOARD_WIDTH;
-            } else if (x<0){
-                this.x = 0;
-            }
-            if (y> Commons.BOARD_HEIGHT){
                 this.y = Commons.BOARD_HEIGHT;
-            } else if (y<0){
-                this.y=0;
             }
 
             var bombImg = "src/main/resources/images/bomb.png";
             var ii = new ImageIcon(bombImg);
             setImage(ii.getImage());
+
         }
 
         /**
