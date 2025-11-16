@@ -1,3 +1,4 @@
+import main.Commons;
 import org.junit.jupiter.api.Test;
 import space_invaders.sprites.Alien;
 import space_invaders.sprites.Alien.Bomb;
@@ -31,7 +32,7 @@ public class BombTest {
             valy.setAccessible(true);
             int valory = (int) valy.get(b);
 
-            assertTrue((valorx == 358) && (valory==350));
+            assertTrue((valorx == Commons.BOARD_WIDTH) && (valory==Commons.BOARD_HEIGHT));
 
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -64,7 +65,7 @@ public class BombTest {
             valy.setAccessible(true);
             int valory = (int) valy.get(b);
 
-            assertTrue((valorx == 358) && (valory == 350));
+            assertTrue((valorx == Commons.BOARD_WIDTH) && (valory == Commons.BOARD_HEIGHT));
 
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
