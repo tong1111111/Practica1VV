@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class PlayerTest {
 
@@ -46,7 +45,7 @@ public class PlayerTest {
 
     @Test
     void TestAct_Caso3(){
-        int x = 358;
+        int x = Commons.BOARD_WIDTH;
         int dx = 2;
         int salidaEsperada = Commons.BOARD_WIDTH + 2 * Commons.PLAYER_WIDTH;
         boolean resultado;
@@ -69,62 +68,61 @@ public class PlayerTest {
     @Test
     void TestKeyPressed_Caso1(){
         KeyEvent e = new KeyEvent(new JButton(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_W, KeyEvent.CHAR_UNDEFINED);
-        int salidaEsperadaIzquierda = 37;
-        int salidaEsperadaDerecha = 39;
+        int salidaEsperadaDxIzquierda = -2;
+        int salidaEsperadaDxDerecha = 2;
         boolean resultado;
         player.keyPressed(e);
-        resultado = (e.getKeyCode() == salidaEsperadaIzquierda) && (e.getKeyCode() == salidaEsperadaDerecha);
-        assertFalse(resultado);
+        resultado = !((player.getDx() == salidaEsperadaDxIzquierda) && (player.getDx() == salidaEsperadaDxDerecha));
+        assertTrue(resultado);
     }
 
     @Test
     void TestKeyPressed_Caso2(){
         KeyEvent e = new KeyEvent(new JButton(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
-        int salidaEsperadaIzquierda = 37;
+        int salidaEsperadaDxIzquierda = -2;
         boolean resultado;
         player.keyPressed(e);
-        resultado = (e.getKeyCode() == salidaEsperadaIzquierda);
+        resultado = (player.getDx() == salidaEsperadaDxIzquierda);
         assertTrue(resultado);
     }
 
     @Test
     void TestKeyPressed_Caso3(){
         KeyEvent e = new KeyEvent(new JButton(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
-        int salidaEsperadaDerecha = 39;
+        int salidaEsperadaDxDerecha = 2;
         boolean resultado;
         player.keyPressed(e);
-        resultado = (e.getKeyCode() == salidaEsperadaDerecha);
+        resultado = (player.getDx() == salidaEsperadaDxDerecha);
         assertTrue(resultado);
     }
 
     @Test
     void TestKeyReleased_Caso1(){
         KeyEvent e = new KeyEvent(new JButton(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_W, KeyEvent.CHAR_UNDEFINED);
-        int salidaEsperadaIzquierda = 37;
-        int salidaEsperadaDerecha = 39;
+        int salidaEsperadaDx = 0;
         boolean resultado;
         player.keyReleased(e);
-        resultado = (e.getKeyCode() == salidaEsperadaIzquierda) && (e.getKeyCode() == salidaEsperadaDerecha);
-        assertFalse(resultado);
+        resultado = (player.getDx() == salidaEsperadaDx);
+        assertTrue(resultado);
     }
 
     @Test
     void TestKeyReleased_Caso2(){
         KeyEvent e = new KeyEvent(new JButton(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED);
-        int salidaEsperadaIzquierda = 37;
+        int salidaEsperadaDxIzquierda = 0;
         boolean resultado;
         player.keyReleased(e);
-        resultado = (e.getKeyCode() == salidaEsperadaIzquierda);
+        resultado = (player.getDx() == salidaEsperadaDxIzquierda);
         assertTrue(resultado);
     }
 
     @Test
     void TestKeyReleased_Caso3(){
         KeyEvent e = new KeyEvent(new JButton(), KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED);
-        int salidaEsperadaDerecha = 39;
+        int salidaEsperadaDxDerecha = 0;
         boolean resultado;
         player.keyReleased(e);
-        resultado = (e.getKeyCode() == salidaEsperadaDerecha);
+        resultado = (player.getDx() == salidaEsperadaDxDerecha);
         assertTrue(resultado);
     }
 }

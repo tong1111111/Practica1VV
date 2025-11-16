@@ -84,4 +84,8 @@ public abstract class Sprite {
     public void setDx(int dx) {
         this.dx = dx;
     }
+
+    public int getDx() {
+        return dx;
+    }
 }
